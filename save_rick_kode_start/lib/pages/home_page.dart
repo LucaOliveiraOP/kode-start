@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:save_rick_kode_start/blocs/rick_scene_bloc/rick_scene_bloc.dart';
+import 'package:save_rick_kode_start/blocs/rick_scene_bloc/rick_scene_state.dart';
 import 'package:save_rick_kode_start/components/app_bar_component.dart';
 import 'package:save_rick_kode_start/components/character_card.dart';
 import 'package:save_rick_kode_start/components/loading_card.dart';
@@ -10,7 +12,7 @@ import '../blocs/character_bloc/character_event.dart';
 import '../blocs/character_bloc/character_state.dart';
 import 'details_page.dart';
 
-/// Página inicial que exibe uma lista de personagens.
+/// Página inicial que exibe uma lista de personagens, e animações dos portais e do Rick.
 ///
 /// Esta página utiliza o padrão BLoC para gerenciar o estado dos personagens,
 /// exibindo um efeito de carregamento (shimmer) enquanto busca os dados e
@@ -40,10 +42,18 @@ class HomePage extends StatelessWidget {
       appBar: appBarComponent(context),
       body: Stack(
         children: [
-          // Lista de personagens no fundo
           BlocBuilder<CharacterBloc, CharacterState>(
             builder: (context, state) {
+              if (state is CharactersEmpty) {
+                return Center(
+                  child: Text(
+                    'Nenhum personagem encontrado.',
+                    style: TextStyle(color: AppColors.white, fontSize: 18),
+                  ),
+                );
+              }
               if (state is CharactersLoading) {
+                // Exibe cards de loading enquanto aguarda a resposta
                 return ListView.builder(
                   itemCount: 3,
                   itemBuilder: (_, __) => const LoadingCard(),
@@ -53,6 +63,7 @@ class HomePage extends StatelessWidget {
               if (state is CharactersLoaded) {
                 final characters = state.characters;
 
+                // Lista rolável com pull-to-refresh ativado
                 return RefreshIndicator(
                   onRefresh: () => _refreshCharacters(context),
                   child: ListView.builder(
@@ -91,13 +102,24 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               }
-
               return const Center(
                 child: Text("Não encontramos nenhum personagem."),
               );
             },
           ),
-          RickPortalAnimation(),
+
+          // Animação dos portais Rick visível quando o estado é LockedInPortals
+          BlocBuilder<RickSceneBloc, RickSceneState>(
+            builder: (context, state) {
+              final isVisible = state is LockedInPortals;
+
+              return AnimatedOpacity(
+                opacity: isVisible ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: RickPortalAnimation(),
+              );
+            },
+          ),
         ],
       ),
     );
