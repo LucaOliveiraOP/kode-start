@@ -1,42 +1,42 @@
-/// Represents a character with detailed information from the Rick and Morty API.
+/// Representa um personagem com informações detalhadas da API Rick and Morty.
 class Character {
-  /// Unique identifier of the character.
+  /// Identificador único do personagem.
   final int id;
 
-  /// Name of the character.
+  /// Nome do personagem.
   final String name;
 
-  /// Current status of the character (e.g., Alive, Dead, Unknown).
+  /// Estado atual do personagem (ex: Vivo, Morto, Desconhecido).
   final String status;
 
-  /// Species of the character (e.g., Human, Alien).
+  /// Espécie do personagem (ex: Humano, Alienígena).
   final String species;
 
-  /// Type or variant of the character (can be empty).
+  /// Tipo ou variante do personagem (pode ser vazio).
   final String type;
 
-  /// Gender of the character (e.g., Male, Female, Genderless, Unknown).
+  /// Gênero do personagem.
   final String gender;
 
-  /// Name of the character's origin location.
+  /// Nome da localização de origem do personagem.
   final String originName;
 
-  /// API URL of the character's origin location.
+  /// URL da API da localização de origem.
   final String originUrl;
 
-  /// Name of the character's current location.
+  /// Nome da localização atual do personagem.
   final String locationName;
 
-  /// API URL of the character's current location.
+  /// URL da API da localização atual.
   final String locationUrl;
 
-  /// URL to the character's image.
+  /// URL da imagem do personagem.
   final String image;
 
-  /// List of episode URLs the character appears in.
+  /// Lista de URLs dos episódios em que o personagem aparece.
   final List<String> episode;
 
-  /// Creates a new [Character] instance with all fields.
+  /// Cria uma nova instância de [Character] com todos os campos.
   Character({
     required this.id,
     required this.name,
@@ -52,7 +52,7 @@ class Character {
     required this.episode,
   });
 
-  /// Creates a [Character] instance from a JSON map.
+  /// Cria uma instância de [Character] a partir de um mapa JSON.
   factory Character.fromJson(Map<String, dynamic> json) {
     return Character(
       id: json['id'],
