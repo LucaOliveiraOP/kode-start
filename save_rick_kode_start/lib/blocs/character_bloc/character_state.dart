@@ -45,3 +45,5 @@ class CharactersError extends CharacterState {
   @override
   List<Object?> get props => [message];
 }
+
+class CharactersEmpty extends CharacterState {}

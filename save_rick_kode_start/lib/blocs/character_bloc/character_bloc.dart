@@ -16,6 +16,10 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   CharacterBloc({required this.repository}) : super(CharactersInitial()) {
     on<LoadCharacters>(_onLoadCharacters);
     on<SearchCharacters>(_onSearchCharacters);
+    on<ClearSearch>((event, emit) {
+      // Emite a lista completa armazenada localmente sem buscar na API
+      emit(CharactersLoaded(_allCharacters));
+    });
   }
 
   /// Manipula o carregamento inicial dos personagens.
@@ -29,7 +33,11 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
     try {
       final characters = await repository.fetchAllCharacters();
       _allCharacters = characters;
-      emit(CharactersLoaded(characters));
+      if (characters.isEmpty) {
+        emit(CharactersEmpty());
+      } else {
+        emit(CharactersLoaded(characters));
+      }
     } catch (_) {
       emit(CharactersError("Erro ao carregar os personagens"));
     }
@@ -38,7 +46,8 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   /// Manipula a busca de personagens pelo nome.
   /// Filtra a lista interna [_allCharacters] para aqueles
   /// cujos nomes contêm a consulta de busca.
-  /// Emite [CharactersLoaded] com a lista filtrada.
+  /// Emite [CharactersLoaded] com a lista filtrada ou [CharactersEmpty]
+  /// caso não encontre nenhum personagem.
   void _onSearchCharacters(
     SearchCharacters event,
     Emitter<CharacterState> emit,
@@ -49,6 +58,10 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       return character.name.toLowerCase().contains(query);
     }).toList();
 
-    emit(CharactersLoaded(filteredCharacters));
+    if (filteredCharacters.isEmpty) {
+      emit(CharactersEmpty());
+    } else {
+      emit(CharactersLoaded(filteredCharacters));
+    }
   }
 }
