@@ -37,6 +37,7 @@ class _SearchIconButtonState extends State<SearchIconButton> {
     setState(() {
       _isSearching = false;
     });
+    context.read<CharacterBloc>().add(ClearSearch());
   }
 
   /// Atualiza a busca conforme o texto muda
