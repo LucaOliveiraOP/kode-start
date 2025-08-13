@@ -27,3 +27,7 @@ class PlayLockedInPortals extends RickSceneEvent {}
 ///
 /// Normalmente faz Rick agradecer e, em seguida, ativa um novo áudio
 class HelpedPickleRick extends RickSceneEvent {}
+
+class RickSpeakAboutEvilMorty extends RickSceneEvent {}
+
+class SpeakEvilMortyRunningAway extends RickSceneEvent {}

@@ -32,6 +32,7 @@ flutter:
     - assets/images/logo.svg
     - assets/images/rick_and_morty_logo.svg
     - assets/images/portal-rick-and-morty.gif
+    - assets/images/evilmorty.gif
     - assets/audio/
 
   fonts:

@@ -38,13 +38,21 @@ class DetailsPage extends StatelessWidget {
             tag: 'character-image-${character.id}',
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                character.image,
-                height: 300,
-                width: 200,
-                fit: BoxFit.cover,
-                alignment: const Alignment(0, -0.4),
-              ),
+              child: character.image.startsWith("assets/")
+                  ? Image.asset(
+                      character.image,
+                      height: 300,
+                      width: 200,
+                      fit: BoxFit.cover,
+                      alignment: const Alignment(0, -0.4),
+                    )
+                  : Image.network(
+                      character.image,
+                      height: 300,
+                      width: 200,
+                      fit: BoxFit.cover,
+                      alignment: const Alignment(0, -0.4),
+                    ),
             ),
           ),
           const SizedBox(height: 24),

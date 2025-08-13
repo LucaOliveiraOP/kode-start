@@ -70,3 +70,21 @@ class Character {
     );
   }
 }
+
+final evilMortyCharacter = Character(
+  id: 0,
+  name: "Evil Morty Fugindo..",
+  status: "Unknown",
+  species: "Human",
+  type: "Evil",
+  gender: "Male",
+  originName: "Evil Luca",
+  originUrl: "",
+  locationName: "Fugindo..",
+  locationUrl: "",
+  image: "assets/images/evilmorty.gif",
+  episode: [
+    "https://rickandmortyapi.com/api/episode/28",
+    "https://rickandmortyapi.com/api/episode/35",
+  ],
+);

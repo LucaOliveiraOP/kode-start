@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:save_rick_kode_start/blocs/character_bloc/character_bloc.dart';
 import 'package:save_rick_kode_start/blocs/character_bloc/character_event.dart';
+import 'package:save_rick_kode_start/blocs/rick_scene_bloc/rick_scene_bloc.dart';
+import 'package:save_rick_kode_start/blocs/rick_scene_bloc/rick_scene_event.dart';
 import 'package:save_rick_kode_start/theme/app_colors.dart';
 
 /// Um botão de ícone de busca que alterna entre o ícone de busca
@@ -42,8 +44,13 @@ class _SearchIconButtonState extends State<SearchIconButton> {
 
   /// Atualiza a busca conforme o texto muda
   void _onSearchChanged(String value) {
-    // Dispara o evento para buscar personagens com o termo digitado
+    // Dispara o evento para o CharacterBloc com o texto da busca
     context.read<CharacterBloc>().add(SearchCharacters(value));
+
+    // Caso contenha "evil morty", dispara um evento especial no RickSceneBloc
+    if (value.toLowerCase().contains("evil morty")) {
+      context.read<RickSceneBloc>().add(SpeakEvilMortyRunningAway());
+    }
   }
 
   @override
@@ -88,7 +95,10 @@ class _SearchIconButtonState extends State<SearchIconButton> {
           // Se não estiver buscando, mostra apenas o ícone de busca
           IconButton(
             icon: Icon(Icons.search, color: AppColors.white),
-            onPressed: _startSearch,
+            onPressed: () {
+              _startSearch();
+              context.read<RickSceneBloc>().add(RickSpeakAboutEvilMorty());
+            },
           );
   }
 }

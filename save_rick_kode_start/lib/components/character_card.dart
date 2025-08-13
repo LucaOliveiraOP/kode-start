@@ -37,13 +37,21 @@ class CharacterCard extends StatelessWidget {
             children: [
               Hero(
                 tag: 'character-image-${character.id}',
-                child: Image.network(
-                  character.image,
-                  height: 170,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  alignment: const Alignment(0, -0.7),
-                ),
+                child: character.image.startsWith("assets/")
+                    ? Image.asset(
+                        character.image,
+                        height: 170,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.7),
+                      )
+                    : Image.network(
+                        character.image,
+                        height: 170,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.7),
+                      ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 12),

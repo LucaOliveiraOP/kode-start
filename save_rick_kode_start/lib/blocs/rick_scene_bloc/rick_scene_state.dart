@@ -28,3 +28,7 @@ class RickSpeaking extends RickSceneState {
 class LockedInPortals extends RickSceneState {
   const LockedInPortals();
 }
+
+class RickSaidAboutEvilMorty extends RickSceneState {}
+
+class EvilMortySaidIsGoingAway extends RickSceneState {}
